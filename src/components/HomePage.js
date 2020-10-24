@@ -3,7 +3,7 @@ import { navigate } from 'hookrouter';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 // import Image from 'react-bootstrap/Image';
-// import { AppContext } from './Provider';
+import { AppContext } from './Provider';
 
 const HomePage = () => {
   // const { state, setState } = useContext(AppContext);
