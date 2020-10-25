@@ -1,5 +1,4 @@
 import React from 'react';
-import { navigate } from 'hookrouter';
 import Container from 'react-bootstrap/Container';
 import Router from './Router';
 

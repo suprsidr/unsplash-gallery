@@ -16,3 +16,12 @@
     width: 100%;
   }
 }
+
+.modal-90w {
+    width: 90vw;
+    max-width: 90vw!important;
+
+    img {
+      max-height: 80vh;
+    }
+}
