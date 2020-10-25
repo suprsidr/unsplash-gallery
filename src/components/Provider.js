@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import propTypes from 'prop-types';
+import { getCollection } from '../services/lambda-service';
 
 export const AppContext = React.createContext();
 
@@ -24,8 +25,7 @@ const Provider = ({ children, appState = initialState }) => {
 
   const fetchMore = async ({ page, perPage, query }) => {
     let results = [];
-    const response = await fetch(`https://8odnccq66m.execute-api.us-east-1.amazonaws.com/dev/index?page=${page}&per_page=${perPage}&query=${query}`);
-    const json = await response.json();
+    const json = await getCollection({ page, perPage, query });
     if(json.results) {
       results = json.results.map(({ id, created_at: created, description, alt_description: altDescription, urls, links, likes, user }) =>
         ({id, created, description, altDescription, urls, links, likes, user}));
