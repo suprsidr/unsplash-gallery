@@ -20,8 +20,12 @@
 .modal-90w {
     width: 90vw;
     max-width: 90vw!important;
+    margin: .5rem auto!important;
 
     img {
       max-height: 80vh;
+    }
+    .by-line > p {
+      text-transform: capitalize;
     }
 }
