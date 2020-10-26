@@ -5,6 +5,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Image from 'react-bootstrap/Image';
 import Modal from 'react-bootstrap/Modal';
+import { BsFillCaretLeftFill, BsFillCaretRightFill } from 'react-icons/bs';
 import Spinner from 'react-bootstrap/Spinner';
 import { AppContext } from './Provider';
 import { download } from '../services/download-service';
@@ -15,6 +16,7 @@ import './imageGrid.scss';
 const ImageGrid = ({ query }) => {
   const { state, setState } = useContext(AppContext);
   const [show, setShow] = useState(false);
+  const [current, setCurrent] = useState(0);
 
   const fetchMore = async () => {
     const { page, perPage } = state;
@@ -29,6 +31,7 @@ const ImageGrid = ({ query }) => {
 
   const [modalState, setModalState] = useState({
     id: '',
+    index: 0,
     created: '',
     description: '',
     altDescription: '',
@@ -61,10 +64,27 @@ const ImageGrid = ({ query }) => {
     500: 2
   };
 
-  const showModal = ({ e, id, created, description, altDescription, urls, links, likes, user }) => {
+  const showModal = (e, index) => {
     e.preventDefault();
-    setModalState({ id, created, description, altDescription, urls, links, likes, user });
+    setModalState(state.photoItems[index]);
+    setCurrent(index);
     setShow(true)
+  }
+
+  const prev = e => {
+    let index = current - 1;
+    if (index < 0) {
+      index = 0;
+    }
+    showModal(e, index);
+  }
+
+  const next = e => {
+    let index = current + 1;
+    if (index === state.photoItems.length) {
+      index = state.photoItems.length - 1;
+    }
+    showModal(e, index);
   }
 
   return (
@@ -75,10 +95,10 @@ const ImageGrid = ({ query }) => {
             breakpointCols={breakpointColumnsObj}
             className="my-masonry-grid"
             columnClassName="my-masonry-grid_column">
-            {state.photoItems.map(({ id, created, description, altDescription, urls, links, likes, user }, i) => (
-              <div key={id + i}>
-                <a href={links.download} onClick={(e) => showModal({ e, id, created, description, altDescription, urls, links, likes, user })}>
-                  <Image src={urls.small} alt={description || altDescription || 'No description'} thumbnail />
+            {state.photoItems.map((photoItem, index) => (
+              <div key={photoItem.id + index}>
+                <a href={photoItem.links.download} onClick={(e) => showModal(e, index)}>
+                  <Image src={photoItem.urls.small} alt={photoItem.description || photoItem.altDescription || 'No description'} thumbnail />
                 </a>
               </div>
             ))}
@@ -88,10 +108,9 @@ const ImageGrid = ({ query }) => {
           show={show}
           onHide={() => setShow(false)}
           dialogClassName="modal-90w"
-          aria-labelledby="example-custom-modal-styling-title"
         >
           <Modal.Header closeButton>
-            <Modal.Title id="example-custom-modal-styling-title">
+            <Modal.Title>
               {modalState.description || modalState.altDescription || 'No description'}
             </Modal.Title>
           </Modal.Header>
@@ -101,13 +120,24 @@ const ImageGrid = ({ query }) => {
                 <a href={modalState.links.download} onClick={async e => await download(e, modalState.id)}>
                   <Image src={modalState.urls.full} alt={modalState.description || modalState.altDescription || 'No description'} thumbnail />
                 </a>
+                <div className="arrows">
+                  <div>
+                    <span className="float-left" onClick={(e) => prev(e)}><BsFillCaretLeftFill size={96} /></span>
+                    <span className="float-right" onClick={(e) => next(e)}><BsFillCaretRightFill size={96} /></span>
+                  </div>
+                </div>
               </Col>
             </Row>
             <Row>
               <Col className="text-center by-line">
-                <p>By: {`${modalState.user.first_name} ${modalState.user.last_name}`} Likes: {modalState.likes}</p>
+                <span>By: {`${modalState.user.first_name} ${modalState.user.last_name}`}<br />Likes: {modalState.likes}</span>
               </Col>
             </Row>
+            {/* <Row>
+              <Col className="text-center text-small">
+                <span>Click Image to Download</span>
+              </Col>
+            </Row> */}
           </Modal.Body>
         </Modal>
       </Row>
