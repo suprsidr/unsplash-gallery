@@ -6,6 +6,6 @@ export const getDownloadUrl = async id => {
 }
 
 export const getCollection = async ({ page, perPage, query }) => {
-  const response = await fetch(`${LAMBDA_URL}?page=${page}&per_page=${perPage}&query=${query}`);
+  const response = await fetch(`${LAMBDA_URL}?page=${page}&per_page=${perPage}&query=${query}&order_by=latest`);
   return await response.json();
 }
