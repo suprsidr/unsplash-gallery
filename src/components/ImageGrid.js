@@ -8,7 +8,6 @@ import Modal from 'react-bootstrap/Modal';
 import { BsFillCaretLeftFill, BsFillCaretRightFill } from 'react-icons/bs';
 import Spinner from 'react-bootstrap/Spinner';
 import { AppContext } from './Provider';
-import { download } from '../services/download-service';
 import { getCollection } from '../services/lambda-service';
 
 import './imageGrid.scss';
@@ -16,18 +15,8 @@ import './imageGrid.scss';
 const ImageGrid = ({ query }) => {
   const { state, setState } = useContext(AppContext);
   const [show, setShow] = useState(false);
-  const [current, setCurrent] = useState(0);
-
-  const fetchMore = async () => {
-    const { page, perPage } = state;
-    let results = [];
-    const json = await getCollection({ page, perPage, query });
-    if (json.results) {
-      results = json.results.map(({ id, created_at: created, description, alt_description: altDescription, urls, links, likes, user }) =>
-        ({ id, created, description, altDescription, urls, links, likes, user }));
-    }
-    setState({ page: page + 1, photoItems: [...state.photoItems, ...results] });
-  };
+  const [current, setCurrent] = useState();
+  const [loading, setLoading] = useState(false);
 
   const [modalState, setModalState] = useState({
     id: '',
@@ -46,16 +35,21 @@ const ImageGrid = ({ query }) => {
     rootMargin: '0px'
   });
 
-  /* eslint-disable */
-  // eslint exhaustive-deps rule would have me break this functionality
-  useEffect(async () => {
+  useEffect(() => {
     if (inView) {
-      // Fire event when our intersection observer is coming into view
-      console.log('Section shown');
+      async function fetchMore() {
+        const { page, perPage } = state;
+        let results = [];
+        const json = await getCollection({ page, perPage, query });
+        if (json.results) {
+          results = json.results.map(({ id, created_at: created, description, alt_description: altDescription, urls, links, likes, user }) =>
+            ({ id, created, description, altDescription, urls, links, likes, user }));
+        }
+        setState({ page: page + 1, photoItems: [...state.photoItems, ...results] });
+      }
       fetchMore();
     }
-  }, [inView]);
-  /* eslint-enable */
+  }, [inView, query, state, setState]);
 
   const breakpointColumnsObj = {
     default: 5,
@@ -68,7 +62,13 @@ const ImageGrid = ({ query }) => {
     e.preventDefault();
     setModalState(state.photoItems[index]);
     setCurrent(index);
-    setShow(true)
+    setShow(true);
+    setLoading(true);
+    // next tick
+    setTimeout(() => {
+      const el = document.querySelector('.current');
+      el.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'center' });
+    }, 0);
   }
 
   const prev = e => {
@@ -97,7 +97,7 @@ const ImageGrid = ({ query }) => {
             columnClassName="my-masonry-grid_column">
             {state.photoItems.map((photoItem, index) => (
               <div key={photoItem.id + index}>
-                <a href={photoItem.links.download} onClick={(e) => showModal(e, index)}>
+                <a href={photoItem.links.download} onClick={(e) => showModal(e, index)} className={current === index ? 'current' : ''}>
                   <Image src={photoItem.urls.small} alt={photoItem.description || photoItem.altDescription || 'No description'} thumbnail />
                 </a>
               </div>
@@ -117,9 +117,13 @@ const ImageGrid = ({ query }) => {
           <Modal.Body className="text-center">
             <Row>
               <Col>
-                <a href={modalState.links.download} onClick={async e => await download(e, modalState.id)}>
-                  <Image src={modalState.urls.full} alt={modalState.description || modalState.altDescription || 'No description'} thumbnail />
-                </a>
+                <Image onLoad={() => setLoading(false)} src={modalState.urls.full} alt={modalState.description || modalState.altDescription || 'No description'} thumbnail />
+                {loading &&
+                <div className="imageLoading text-center">
+                  <Spinner animation="border" role="status">
+                    <span className="sr-only">Loading...</span>
+                  </Spinner>
+                </div>}
                 <div className="arrows">
                   <div>
                     <span className="float-left" onClick={(e) => prev(e)}><BsFillCaretLeftFill size={96} /></span>
@@ -130,14 +134,9 @@ const ImageGrid = ({ query }) => {
             </Row>
             <Row>
               <Col className="text-center by-line">
-                <span>By: {`${modalState.user.first_name} ${modalState.user.last_name}`}<br />Likes: {modalState.likes}</span>
+                <span>By: {`${modalState.user.first_name || ''} ${modalState.user.last_name || ''}`}<br />Likes: {modalState.likes}</span>
               </Col>
             </Row>
-            {/* <Row>
-              <Col className="text-center text-small">
-                <span>Click Image to Download</span>
-              </Col>
-            </Row> */}
           </Modal.Body>
         </Modal>
       </Row>
