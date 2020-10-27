@@ -6,7 +6,7 @@ export const AppContext = React.createContext();
 export const initialState = {
   photoItems: [],
   page: 0,
-  perPage: 50
+  perPage: 30
 };
 
 const Provider = ({ children, appState = initialState }) => {
