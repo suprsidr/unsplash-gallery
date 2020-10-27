@@ -5,6 +5,8 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Image from 'react-bootstrap/Image';
 import Modal from 'react-bootstrap/Modal';
+import Navbar from 'react-bootstrap/Navbar';
+import Nav from 'react-bootstrap/Nav';
 import { BsFillCaretLeftFill, BsFillCaretRightFill } from 'react-icons/bs';
 import Spinner from 'react-bootstrap/Spinner';
 import { AppContext } from './Provider';
@@ -89,6 +91,16 @@ const ImageGrid = ({ query }) => {
 
   return (
     <>
+      <Navbar bg="light" expand="lg">
+        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+        <Navbar.Collapse id="basic-navbar-nav">
+          <Nav className="mr-auto">
+            <Nav.Link href="/">Home</Nav.Link>
+            {query === 'cats' && <Nav.Link href="/dogs">Dogs</Nav.Link>}
+            {query === 'dogs' && <Nav.Link href="/cats">Cats</Nav.Link>}
+          </Nav>
+        </Navbar.Collapse>
+      </Navbar>
       <Row>
         <Col>
           <Masonry
