@@ -23,7 +23,6 @@ const ImageGrid = ({ query }) => {
   const [modalState, setModalState] = useState({
     id: '',
     index: 0,
-    created: '',
     description: '',
     altDescription: '',
     urls: {},
@@ -109,7 +108,7 @@ const ImageGrid = ({ query }) => {
             columnClassName="my-masonry-grid_column">
             {state.photoItems.map((photoItem, index) => (
               <div key={photoItem.id + index}>
-                <a href={photoItem.links.download} onClick={(e) => showModal(e, index)} className={current === index ? 'current' : ''}>
+                <a data-testid={photoItem.id + index} href={photoItem.links.download} onClick={(e) => showModal(e, index)} className={current === index ? 'current' : ''}>
                   <Image src={photoItem.urls.small} alt={photoItem.description || photoItem.altDescription || 'No description'} thumbnail />
                 </a>
               </div>
