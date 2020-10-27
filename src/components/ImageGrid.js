@@ -44,8 +44,8 @@ const ImageGrid = ({ query }) => {
         let results = [];
         const json = await getCollection({ page, perPage, query });
         if (json.results) {
-          results = json.results.map(({ id, created_at: created, description, alt_description: altDescription, urls, links, likes, user }) =>
-            ({ id, created, description, altDescription, urls, links, likes, user }));
+          results = json.results.map(({ id, description, alt_description: altDescription, urls, links, likes, user }) =>
+            ({ id, description, altDescription, urls, links, likes, user }));
         }
         setState({ page: page + 1, photoItems: [...state.photoItems, ...results] });
       }
