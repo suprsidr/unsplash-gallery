@@ -36,6 +36,18 @@
       text-transform: capitalize;
     }
 
+    .imageLoading {
+      display: grid;
+      place-items: center;
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      margin: auto;
+      z-index: 20;
+    }
+
     .arrows {
       display: grid;
       place-items: center;
@@ -45,7 +57,7 @@
       bottom: 0;
       left: 0;
       margin: auto;
-      z-index: 10;
+      z-index: 20;
 
       > div {
         height: 96px;

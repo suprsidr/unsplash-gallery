@@ -120,9 +120,7 @@ const ImageGrid = ({ query }) => {
                 <Image onLoad={() => setLoading(false)} src={modalState.urls.full} alt={modalState.description || modalState.altDescription || 'No description'} thumbnail />
                 {loading &&
                 <div className="imageLoading text-center">
-                  <Spinner animation="border" role="status">
-                    <span className="sr-only">Loading...</span>
-                  </Spinner>
+                  <Spinner animation="grow" variant="warning" />
                 </div>}
                 <div className="arrows">
                   <div>
