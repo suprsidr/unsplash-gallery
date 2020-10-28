@@ -90,15 +90,12 @@ const ImageGrid = ({ query }) => {
 
   return (
     <>
-      <Navbar bg="light" expand="lg">
-        <Navbar.Toggle aria-controls="basic-navbar-nav" />
-        <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="mr-auto">
-            <Nav.Link href="/">Home</Nav.Link>
-            {query === 'cats' && <Nav.Link href="/dogs">Dogs</Nav.Link>}
-            {query === 'dogs' && <Nav.Link href="/cats">Cats</Nav.Link>}
-          </Nav>
-        </Navbar.Collapse>
+      <Navbar bg="light" fixed="top">
+        <Nav className="mr-auto">
+          <Nav.Link href="/">Home</Nav.Link>
+          {query === 'cats' && <Nav.Link href="/dogs">Dogs</Nav.Link>}
+          {query === 'dogs' && <Nav.Link href="/cats">Cats</Nav.Link>}
+        </Nav>
       </Navbar>
       <Row>
         <Col>
