@@ -42,7 +42,6 @@ const ImageGrid = ({ query }) => {
         const { page, perPage } = state;
         let results = [];
         const json = await getCollection({ page, perPage, query });
-        json.error = 'bad request';
         if (json.results) {
           results = json.results.map(({ id, description, alt_description: altDescription, urls, links, likes, user }) =>
             ({ id, description, altDescription, urls, links, likes, user }));
@@ -69,7 +68,7 @@ const ImageGrid = ({ query }) => {
       }
       fetchMore();
     }
-  }, [inView, query, state, setState]);
+  }, [inView]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const breakpointColumnsObj = {
     default: 5,
