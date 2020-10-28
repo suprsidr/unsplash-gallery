@@ -42,9 +42,28 @@ const ImageGrid = ({ query }) => {
         const { page, perPage } = state;
         let results = [];
         const json = await getCollection({ page, perPage, query });
+        json.error = 'bad request';
         if (json.results) {
           results = json.results.map(({ id, description, alt_description: altDescription, urls, links, likes, user }) =>
             ({ id, description, altDescription, urls, links, likes, user }));
+        }
+        if (json.error) {
+          document.querySelector('.my-masonry-grid').style.height = '100vh';
+          setModalState({
+            id: 12345,
+            description: 'Opps! Something went wrong',
+            altDescription: '',
+            urls: {
+              full: '/broken.jpg'
+            },
+            links: {},
+            likes: -500,
+            user: {
+              first_name: 'Bad',
+              last_name: 'Robot'
+            }
+          });
+          setShow(true);
         }
         setState({ page: page + 1, photoItems: [...state.photoItems, ...results] });
       }
