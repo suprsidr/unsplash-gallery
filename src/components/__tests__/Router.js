@@ -34,5 +34,11 @@ describe('The Router component', () => {
     });
     const dogLinkElement = getByText(/dogs/i);
     expect(dogLinkElement).toBeInTheDocument();
+
+    act(() => {
+      navigate('/foo');
+    });
+    const oopsElement = getByText(/oops/i);
+    expect(oopsElement).toBeInTheDocument();
   });
 });
