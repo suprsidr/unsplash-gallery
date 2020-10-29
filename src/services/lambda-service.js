@@ -14,3 +14,8 @@ export const getCollectionList = async ({ page, perPage, query }) => {
   const response = await fetch(`${LAMBDA_URL}?page=${page}&per_page=${perPage}&collection_query=${query}`);
   return await response.json();
 }
+
+export const getCollectionPhotos = async ({ page, perPage, id }) => {
+  const response = await fetch(`${LAMBDA_URL}?page=${page}&per_page=${perPage}&collection_id=${id}`);
+  return await response.json();
+}

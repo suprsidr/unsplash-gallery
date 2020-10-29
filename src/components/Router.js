@@ -12,7 +12,7 @@ const Router = () => {
     '/': () => <HomePage />,
     '/cats': () => <ImageGrid query="cats" />,
     '/dogs': () => <ImageGrid query="dogs" />,
-    '/foo': () => <CollectionList query="cats" />
+    '/collections/:query': ({ query }) => <CollectionList query={query} />
   };
   /* eslint-enable */
 

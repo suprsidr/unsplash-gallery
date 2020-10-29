@@ -24,13 +24,13 @@ const CollectionList = ({ query }) => {
       async function fetchMore() {
         const { collectionListPage, perPage } = state;
         let results = [];
-        const json = await getCollectionList({ collectionListPage, perPage, query });
+        const json = await getCollectionList({ page: collectionListPage, perPage, query });
         if (json.results) {
           results = json.results.map(({ id, title, cover_photo: coverPhoto, total_photos: totalPhotos, links, user }) =>
             ({ id, title, coverPhoto, totalPhotos, links, user }));
         }
         setState({
-          page: collectionListPage + 1, collectionListItems: [...state.collectionListItems, ...results] });
+          collectionListPage: collectionListPage + 1, collectionListItems: [...state.collectionListItems, ...results] });
       }
       fetchMore();
     }

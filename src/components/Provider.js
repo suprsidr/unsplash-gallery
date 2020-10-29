@@ -5,9 +5,9 @@ export const AppContext = React.createContext();
 
 export const initialState = {
   collectionListItems: [],
-  collectionListPage: 0,
+  collectionListPage: 1,
   photoItems: [],
-  page: 0,
+  page: 1,
   perPage: 30
 };
 
