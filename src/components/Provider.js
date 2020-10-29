@@ -4,6 +4,8 @@ import propTypes from 'prop-types';
 export const AppContext = React.createContext();
 
 export const initialState = {
+  collectionListItems: [],
+  collectionListPage: 0,
   photoItems: [],
   page: 0,
   perPage: 30
