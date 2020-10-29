@@ -57,7 +57,7 @@ const CollectionList = ({ query }) => {
       {state.collectionListItems.map((collectionItem, index) => (
         <Row key={collectionItem.id + index}>
           <Col>
-            <A data-testid={collectionItem.id + index} href={`/collections/${collectionItem.id}`} >
+            <A data-testid={collectionItem.id + index} href={`/photos/${collectionItem.id}`} >
               <Image src={collectionItem.coverPhoto.urls.small} alt={collectionItem.title || 'No title'} thumbnail />
             </A>
           </Col>
