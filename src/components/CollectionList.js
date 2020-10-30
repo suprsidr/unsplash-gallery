@@ -54,8 +54,8 @@ const CollectionList = ({ query }) => {
           <Navbar bg="light" fixed="top">
             <Nav className="mr-auto">
               <Nav.Link href="/">Home</Nav.Link>
-              {query === 'cats' && <Nav.Link href="/dogs">Dogs</Nav.Link>}
-              {query === 'dogs' && <Nav.Link href="/cats">Cats</Nav.Link>}
+              <Nav.Link href="/collections/dogs">Dogs</Nav.Link>
+              <Nav.Link href="/collections/cats">Cats</Nav.Link>
             </Nav>
           </Navbar>
         </Col>
