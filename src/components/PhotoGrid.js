@@ -104,8 +104,8 @@ const PhotoGrid = ({ fetchMore, error }) => {
       <Navbar bg="light" fixed="top">
         <Nav className="mr-auto">
           <Nav.Link href="/">Home</Nav.Link>
-          <Nav.Link href="/dogs">Dogs</Nav.Link>
-          <Nav.Link href="/cats">Cats</Nav.Link>
+          <Nav.Link href="/collections/dogs">Dogs</Nav.Link>
+          <Nav.Link href="/collections/cats">Cats</Nav.Link>
         </Nav>
       </Navbar>
       <Row>

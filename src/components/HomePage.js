@@ -26,12 +26,12 @@ const HomePage = () => {
       </Row>
       <Row className="cats-n-dogs">
         <Col className="text-center">
-          <a href="/cats" onClick={(e) => goto(e, '/cats')}>
+          <a href="/collections/cats" onClick={(e) => goto(e, '/collections/cats')}>
             <Image src="/cat.png" alt="cat" />
           </a>
         </Col>
         <Col className="text-center">
-          <a href="/dogs" onClick={(e) => goto(e, '/dogs')}>
+          <a href="/collections/dogs" onClick={(e) => goto(e, '/collections/dogs')}>
             <Image src="/dog.png" alt="dog" />
           </a>
         </Col>
