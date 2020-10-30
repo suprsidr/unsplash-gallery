@@ -5,6 +5,7 @@ import HomePage from './HomePage';
 import NotFound from './NotFound';
 import ImageGrid from './ImageGrid';
 import CollectionList from './CollectionList';
+import CollectionImageData from './CollectionImageData';
 import PhotoGrid from './PhotoGrid';
 
 const Router = () => {
@@ -14,7 +15,11 @@ const Router = () => {
     '/cats': () => <ImageGrid query="cats" />,
     '/dogs': () => <ImageGrid query="dogs" />,
     '/collections/:query': ({ query }) => <CollectionList query={query} />,
-    '/photos/:id': ({ id }) => <PhotoGrid id={id} />
+    '/photos/:id': ({ id }) => (
+      <CollectionImageData id={id} >
+        <PhotoGrid />
+      </CollectionImageData>
+    )
   };
   /* eslint-enable */
 

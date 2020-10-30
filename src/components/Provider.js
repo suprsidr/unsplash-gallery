@@ -8,7 +8,9 @@ export const initialState = {
   collectionListPage: 1,
   photoItems: [],
   page: 1,
-  perPage: 30
+  perPage: 30,
+  query: '',
+  endOfData: false
 };
 
 const Provider = ({ children, appState = initialState }) => {

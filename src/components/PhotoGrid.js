@@ -10,15 +10,15 @@ import Nav from 'react-bootstrap/Nav';
 import { BsFillCaretLeftFill, BsFillCaretRightFill } from 'react-icons/bs';
 import Spinner from 'react-bootstrap/Spinner';
 import { AppContext } from './Provider';
-import { getCollectionPhotos } from '../services/lambda-service';
 
 import './imageGrid.scss';
 
-const PhotoGrid = ({ id }) => {
-  const { state, setState } = useContext(AppContext);
+const PhotoGrid = ({ fetchMore, error }) => {
+  const { state } = useContext(AppContext);
   const [show, setShow] = useState(false);
   const [current, setCurrent] = useState();
   const [loading, setLoading] = useState(false);
+  const [observe, setObserve] = useState(true);
 
   const [modalState, setModalState] = useState({
     id: '',
@@ -38,37 +38,30 @@ const PhotoGrid = ({ id }) => {
 
   useEffect(() => {
     if (inView) {
-      async function fetchMore() {
-        const { page, perPage } = state;
-        let results = [];
-        const json = await getCollectionPhotos({ page, perPage, id });
-        if (json) {
-          results = json.map(({ id, description, alt_description: altDescription, urls, links, likes, user }) =>
-            ({ id, description, altDescription, urls, links, likes, user }));
-        }
-        if (json.error) {
-          document.querySelector('.my-masonry-grid').style.height = '100vh';
-          setModalState({
-            id: 12345,
-            description: 'Opps! Something went wrong',
-            altDescription: '',
-            urls: {
-              full: '/broken.jpg'
-            },
-            links: {},
-            likes: -500,
-            user: {
-              first_name: 'Bad',
-              last_name: 'Robot'
-            }
-          });
-          setShow(true);
-        }
-        setState({ page: page + 1, photoItems: [...state.photoItems, ...results] });
-      }
       fetchMore();
     }
-  }, [inView]); // eslint-disable-line react-hooks/exhaustive-deps
+    if (error) {
+      setObserve(false);
+      setModalState({
+        id: 12345,
+        description: 'Opps! Something went wrong',
+        altDescription: '',
+        urls: {
+          full: '/broken.jpg'
+        },
+        links: {},
+        likes: -500,
+        user: {
+          first_name: 'Bad',
+          last_name: 'Robot'
+        }
+      });
+      setShow(true);
+    }
+    if (state.endOfData) {
+      setObserve(false);
+    }
+  }, [inView, error]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const breakpointColumnsObj = {
     default: 5,
@@ -164,15 +157,17 @@ const PhotoGrid = ({ id }) => {
           </Modal.Body>
         </Modal>
       </Row>
-      <Row>
-        <Col>
-          <div ref={ref} className="text-center">
-            <Spinner animation="border" role="status">
-              <span className="sr-only">Loading...</span>
-            </Spinner>
-          </div>
-        </Col>
-      </Row>
+      {(observe && !state.endOfData) &&
+        <Row>
+          <Col>
+            <div ref={ref} className="text-center">
+              <Spinner animation="border" role="status">
+                <span className="sr-only">Loading...</span>
+              </Spinner>
+            </div>
+          </Col>
+        </Row>
+      }
     </>
   );
 }

@@ -1,5 +1,5 @@
 import React, { useEffect, useContext } from 'react';
-import { A } from 'hookrouter';
+import { navigate } from 'hookrouter';
 import { useInView } from 'react-intersection-observer';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -19,19 +19,30 @@ const CollectionList = ({ query }) => {
     rootMargin: '0px'
   });
 
+  const fetchMore = async () => {
+    const { collectionListPage, perPage } = state;
+    let results = [];
+    const json = await getCollectionList({ page: collectionListPage, perPage, query });
+    if (json.results) {
+      results = json.results.map(({ id, title, cover_photo: coverPhoto, total_photos: totalPhotos, links, user }) =>
+        ({ id, title, coverPhoto, totalPhotos, links, user }));
+    }
+    setState({
+      collectionListPage: collectionListPage + 1, collectionListItems: [...state.collectionListItems, ...results]
+    });
+  };
+
+  const goto = (e, id) => {
+    setState({
+      photoItems: [],
+      page: 1,
+      endOfData: false
+    });
+    navigate(`/photos/${id}`);
+  }
+
   useEffect(() => {
     if (inView) {
-      async function fetchMore() {
-        const { collectionListPage, perPage } = state;
-        let results = [];
-        const json = await getCollectionList({ page: collectionListPage, perPage, query });
-        if (json.results) {
-          results = json.results.map(({ id, title, cover_photo: coverPhoto, total_photos: totalPhotos, links, user }) =>
-            ({ id, title, coverPhoto, totalPhotos, links, user }));
-        }
-        setState({
-          collectionListPage: collectionListPage + 1, collectionListItems: [...state.collectionListItems, ...results] });
-      }
       fetchMore();
     }
   }, [inView]); // eslint-disable-line react-hooks/exhaustive-deps
@@ -57,9 +68,9 @@ const CollectionList = ({ query }) => {
       {state.collectionListItems.map((collectionItem, index) => (
         <Row key={collectionItem.id + index}>
           <Col>
-            <A data-testid={collectionItem.id + index} href={`/photos/${collectionItem.id}`} >
+            <a data-testid={collectionItem.id + index} href={`/photos/${collectionItem.id}`} onClick={e => goto(e, collectionItem.id)}>
               <Image src={collectionItem.coverPhoto.urls.small} alt={collectionItem.title || 'No title'} thumbnail />
-            </A>
+            </a>
           </Col>
           <Col className="collection-info">
             <div className="text-center">
