@@ -67,12 +67,12 @@ const CollectionList = ({ query }) => {
       </Row>
       {state.collectionListItems.map((collectionItem, index) => (
         <Row key={collectionItem.id + index}>
-          <Col>
+          <Col xs={12} md={6}>
             <a data-testid={collectionItem.id + index} href={`/photos/${collectionItem.id}`} onClick={e => goto(e, collectionItem.id)}>
               <Image src={collectionItem.coverPhoto.urls.small} alt={collectionItem.title || 'No title'} thumbnail />
             </a>
           </Col>
-          <Col className="collection-info">
+          <Col xs={12} md={6} className="collection-info">
             <div className="text-center">
               <h5>{collectionItem.title || 'No title'}</h5>
               <p>Total Photos: {collectionItem.totalPhotos}</p>
