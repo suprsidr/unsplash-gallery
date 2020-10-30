@@ -11,7 +11,7 @@ import { BsFillCaretLeftFill, BsFillCaretRightFill } from 'react-icons/bs';
 import Spinner from 'react-bootstrap/Spinner';
 import { AppContext } from './Provider';
 
-import './imageGrid.scss';
+import './photoGrid.scss';
 
 const PhotoGrid = ({ fetchMore, error }) => {
   const { state } = useContext(AppContext);
@@ -104,8 +104,8 @@ const PhotoGrid = ({ fetchMore, error }) => {
       <Navbar bg="light" fixed="top">
         <Nav className="mr-auto">
           <Nav.Link href="/">Home</Nav.Link>
-          {/* {query === 'cats' && <Nav.Link href="/dogs">Dogs</Nav.Link>}
-          {query === 'dogs' && <Nav.Link href="/cats">Cats</Nav.Link>} */}
+          <Nav.Link href="/dogs">Dogs</Nav.Link>
+          <Nav.Link href="/cats">Cats</Nav.Link>
         </Nav>
       </Navbar>
       <Row>

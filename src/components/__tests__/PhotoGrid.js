@@ -1,18 +1,18 @@
 import '@testing-library/jest-dom/extend-expect';
 import React from 'react';
 import { render, fireEvent, waitFor } from '@testing-library/react';
-import ImageGrid from '../ImageGrid';
+import PhotoGrid from '../PhotoGrid';
 import Provider from '../Provider';
 
 import { setupIntersectionObserverMock } from '../../mocks/mock-intersection-observer';
 
 beforeEach(() => setupIntersectionObserverMock());
 
-describe('The ImageGrid component', () => {
+describe('The PhotoGrid component', () => {
   test('should display dog link in nav bar', () => {
     const { getByText } = render(
       <Provider>
-        <ImageGrid query="cats" />
+        <PhotoGrid query="cats" />
       </Provider>
     );
 
@@ -23,7 +23,7 @@ describe('The ImageGrid component', () => {
   test('should display cat link in nav bar', () => {
     const { getByText } = render(
       <Provider>
-        <ImageGrid query="dogs" />
+        <PhotoGrid query="dogs" />
       </Provider>
     );
 
@@ -58,7 +58,7 @@ describe('The ImageGrid component', () => {
 
     const { getByText, getByAltText, getByTestId, getByRole } = render(
       <Provider appState={initialState}>
-        <ImageGrid query="cats" />
+        <PhotoGrid query="cats" />
       </Provider>
     );
 
