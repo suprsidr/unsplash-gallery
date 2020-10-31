@@ -3,17 +3,13 @@ import { navigate } from 'hookrouter';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Image from 'react-bootstrap/Image';
-import { initialState } from './Provider';
 
 import './homePage.scss';
-import { useSetRecoilState } from 'recoil';
 
 const HomePage = () => {
-  const setState = useSetRecoilState(initialState);
 
   const goto = (e, where) => {
     e.preventDefault();
-    setState(initialState);
     navigate(where);
   }
 
