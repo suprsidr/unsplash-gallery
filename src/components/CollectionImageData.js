@@ -1,10 +1,11 @@
-import React, { useContext } from 'react'
-import { AppContext } from './Provider';
+import React from 'react'
+import { useRecoilState } from 'recoil';
 import { getCollectionPhotos } from '../services/lambda-service';
+import { initialState } from './Provider';
 
 const CollectionImageData = ({ children, id }) => {
 
-  const { state, setState } = useContext(AppContext);
+  const [ state, setState ] = useRecoilState(initialState);
 
   let error = false;
 
@@ -20,6 +21,7 @@ const CollectionImageData = ({ children, id }) => {
     error = json.error;
 
     setState({
+      ...state,
       page: page + 1,
       photoItems: [...state.photoItems, ...results],
       endOfData: results.length < perPage

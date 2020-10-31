@@ -1,14 +1,15 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { navigate } from 'hookrouter';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Image from 'react-bootstrap/Image';
-import { AppContext, initialState } from './Provider';
+import { initialState } from './Provider';
 
 import './homePage.scss';
+import { useSetRecoilState } from 'recoil';
 
 const HomePage = () => {
-  const { setState } = useContext(AppContext);
+  const setState = useSetRecoilState(initialState);
 
   const goto = (e, where) => {
     e.preventDefault();

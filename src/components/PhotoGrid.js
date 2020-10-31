@@ -1,4 +1,4 @@
-import React, { useEffect, useContext, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 import Masonry from 'react-masonry-css';
 import Row from 'react-bootstrap/Row';
@@ -9,12 +9,13 @@ import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
 import { BsFillCaretLeftFill, BsFillCaretRightFill } from 'react-icons/bs';
 import Spinner from 'react-bootstrap/Spinner';
-import { AppContext } from './Provider';
+import { initialState } from './Provider';
 
 import './photoGrid.scss';
+import { useRecoilValue } from 'recoil';
 
 const PhotoGrid = ({ fetchMore, error }) => {
-  const { state } = useContext(AppContext);
+  const state  = useRecoilValue(initialState);
   const [show, setShow] = useState(false);
   const [current, setCurrent] = useState();
   const [loading, setLoading] = useState(false);
@@ -57,9 +58,6 @@ const PhotoGrid = ({ fetchMore, error }) => {
         }
       });
       setShow(true);
-    }
-    if (state.endOfData) {
-      setObserve(false);
     }
   }, [inView, error]); // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -114,7 +112,7 @@ const PhotoGrid = ({ fetchMore, error }) => {
             breakpointCols={breakpointColumnsObj}
             className="my-masonry-grid"
             columnClassName="my-masonry-grid_column">
-            {state.photoItems.map((photoItem, index) => (
+            {state.photoItems.length > 0 && state.photoItems.map((photoItem, index) => (
               <div key={photoItem.id + index}>
                 <a data-testid={photoItem.id + index} href={photoItem.links.download} onClick={(e) => showModal(e, index)} className={current === index ? 'current' : ''}>
                   <Image src={photoItem.urls.small} alt={photoItem.description || photoItem.altDescription || 'No description'} thumbnail />

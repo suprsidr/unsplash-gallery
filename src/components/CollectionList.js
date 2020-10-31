@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from 'react';
+import React, { useEffect } from 'react';
 import { navigate } from 'hookrouter';
 import { useInView } from 'react-intersection-observer';
 import Row from 'react-bootstrap/Row';
@@ -7,13 +7,14 @@ import Image from 'react-bootstrap/Image';
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
 import Spinner from 'react-bootstrap/Spinner';
-import { AppContext } from './Provider';
 import { getCollectionList } from '../services/lambda-service';
 
 import './collectionList.scss';
+import { useRecoilState } from 'recoil';
+import { initialState } from './Provider';
 
 const CollectionList = ({ query }) => {
-  const { state, setState } = useContext(AppContext);
+  const [state, setState] = useRecoilState(initialState);
   const [ref, inView] = useInView({
     triggerOnce: false,
     rootMargin: '0px'
@@ -28,7 +29,9 @@ const CollectionList = ({ query }) => {
         ({ id, title, coverPhoto, totalPhotos, links, user }));
     }
     setState({
-      collectionListPage: collectionListPage + 1, collectionListItems: [...state.collectionListItems, ...results]
+      ...state,
+      collectionListPage: collectionListPage + 1,
+      collectionListItems: [...state.collectionListItems, ...results]
     });
   };
 
