@@ -112,7 +112,7 @@ const PhotoGrid = ({ fetchMore, error }) => {
             breakpointCols={breakpointColumnsObj}
             className="my-masonry-grid"
             columnClassName="my-masonry-grid_column">
-            {state.photoItems.length > 0 && state.photoItems.map((photoItem, index) => (
+            {state.photoItems.map((photoItem, index) => (
               <div key={photoItem.id + index}>
                 <a data-testid={photoItem.id + index} href={photoItem.links.download} onClick={(e) => showModal(e, index)} className={current === index ? 'current' : ''}>
                   <Image src={photoItem.urls.small} alt={photoItem.description || photoItem.altDescription || 'No description'} thumbnail />
