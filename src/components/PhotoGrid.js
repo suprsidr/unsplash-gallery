@@ -5,14 +5,13 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Image from 'react-bootstrap/Image';
 import Modal from 'react-bootstrap/Modal';
-import Navbar from 'react-bootstrap/Navbar';
-import Nav from 'react-bootstrap/Nav';
 import { BsFillCaretLeftFill, BsFillCaretRightFill } from 'react-icons/bs';
 import Spinner from 'react-bootstrap/Spinner';
+import { useRecoilValue } from 'recoil';
 import { initialState } from './Provider';
+import { AppNavBar } from './AppNavBar';
 
 import './photoGrid.scss';
-import { useRecoilValue } from 'recoil';
 
 const PhotoGrid = ({ fetchMore, error }) => {
   const state  = useRecoilValue(initialState);
@@ -99,13 +98,11 @@ const PhotoGrid = ({ fetchMore, error }) => {
 
   return (
     <>
-      <Navbar bg="light" fixed="top">
-        <Nav className="mr-auto">
-          <Nav.Link href="/">Home</Nav.Link>
-          <Nav.Link href="/collections/dogs">Dogs</Nav.Link>
-          <Nav.Link href="/collections/cats">Cats</Nav.Link>
-        </Nav>
-      </Navbar>
+      <Row>
+        <Col>
+          <AppNavBar />
+        </Col>
+      </Row>
       <Row>
         <Col>
           <Masonry

@@ -1,11 +1,15 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useRecoilState } from 'recoil';
 import { getPhotos } from '../services/lambda-service';
-import { initialState } from './Provider';
+import { initialState, initialPhotoState } from './Provider';
 
 const PhotosSearchData = ({ children, query }) => {
 
   const [ state, setState ] = useRecoilState(initialState);
+
+  useEffect(() => {
+    setState(initialPhotoState);
+  }, [query]); // eslint-disable-line react-hooks/exhaustive-deps
 
   let error = false;
 

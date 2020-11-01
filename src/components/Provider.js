@@ -5,24 +5,32 @@ import {
   atom
 } from 'recoil';
 
+export const initialPhotoState = {
+  photoItems: [],
+  page: 1,
+  perPage: 30,
+  endOfData: false
+}
+
 export const initialState = atom({
   key: 'initialState',
   default: {
-    photoItems: [],
-    page: 1,
-    perPage: 30,
-    endOfData: false
+    ...initialPhotoState
   }
 });
+
+export const initialCollectionListState = {
+  collectionListItems: [],
+  page: 1,
+  perPage: 10,
+  error: false,
+  endOfData: false
+}
 
 export const collectionListState = atom({
   key: 'collectionListState',
   default: {
-    collectionListItems: [],
-    page: 1,
-    perPage: 10,
-    error: false,
-    endOfData: false
+    ...initialCollectionListState
   }
 });
 

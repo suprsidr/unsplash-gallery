@@ -1,15 +1,14 @@
 import React, { useEffect } from 'react';
-import { navigate } from 'hookrouter';
+import { A } from 'hookrouter';
 import { useInView } from 'react-intersection-observer';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Image from 'react-bootstrap/Image';
-import Navbar from 'react-bootstrap/Navbar';
-import Nav from 'react-bootstrap/Nav';
 import Spinner from 'react-bootstrap/Spinner';
 import { useRecoilState } from 'recoil';
-import { collectionListState } from './Provider';
+import { collectionListState, initialCollectionListState } from './Provider';
 import { getCollectionList } from '../services/lambda-service';
+import { AppNavBar } from './AppNavBar';
 
 import './collectionList.scss';
 
@@ -19,6 +18,10 @@ const CollectionList = ({ query }) => {
     triggerOnce: false,
     rootMargin: '0px'
   });
+
+  useEffect(() => {
+    setState(initialCollectionListState)
+  }, [query]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const fetchMore = async () => {
     const { page, perPage } = state;
@@ -47,15 +50,6 @@ const CollectionList = ({ query }) => {
     });
   };
 
-  const goto = (e, id) => {
-    setState({
-      photoItems: [],
-      page: 1,
-      endOfData: false
-    });
-    navigate(`/photos/${id}`);
-  }
-
   useEffect(() => {
     if (inView) {
       fetchMore();
@@ -66,13 +60,7 @@ const CollectionList = ({ query }) => {
     <>
       <Row>
         <Col>
-          <Navbar bg="light" fixed="top">
-            <Nav className="mr-auto">
-              <Nav.Link href="/">Home</Nav.Link>
-              <Nav.Link href="/collections/dogs">Dogs</Nav.Link>
-              <Nav.Link href="/collections/cats">Cats</Nav.Link>
-            </Nav>
-          </Navbar>
+          <AppNavBar />
         </Col>
       </Row>
       <Row>
@@ -83,9 +71,9 @@ const CollectionList = ({ query }) => {
       {state.collectionListItems.map((collectionItem, index) => (
         <Row key={collectionItem.id + index}>
           <Col xs={12} md={6}>
-            <a data-testid={collectionItem.id + index} href={`/photos/${collectionItem.id}`} onClick={e => goto(e, collectionItem.id)}>
+            <A data-testid={collectionItem.id + index} href={`/photos/${collectionItem.id}`}>
               <Image src={collectionItem.coverPhoto.urls.small} alt={collectionItem.title || 'No title'} thumbnail />
-            </a>
+            </A>
           </Col>
           <Col xs={12} md={6} className="collection-info">
             <div className="text-center">
