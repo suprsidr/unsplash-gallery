@@ -1,5 +1,5 @@
 import React from 'react';
-import { navigate } from 'hookrouter';
+import { A } from 'hookrouter';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Image from 'react-bootstrap/Image';
@@ -7,11 +7,6 @@ import Image from 'react-bootstrap/Image';
 import './homePage.scss';
 
 const HomePage = () => {
-
-  const goto = (e, where) => {
-    e.preventDefault();
-    navigate(where);
-  }
 
   return (
     <>
@@ -23,14 +18,14 @@ const HomePage = () => {
       </Row>
       <Row className="cats-n-dogs">
         <Col className="text-center">
-          <a href="/collections/cats" onClick={(e) => goto(e, '/collections/cats')}>
+          <A href="/collections/cats">
             <Image src="/cat.png" alt="cat" />
-          </a>
+          </A>
         </Col>
         <Col className="text-center">
-          <a href="/collections/dogs" onClick={(e) => goto(e, '/collections/dogs')}>
+          <A href="/collections/dogs">
             <Image src="/dog.png" alt="dog" />
-          </a>
+          </A>
         </Col>
       </Row>
     </>
