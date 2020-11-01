@@ -7,30 +7,42 @@ import Image from 'react-bootstrap/Image';
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
 import Spinner from 'react-bootstrap/Spinner';
+import { useRecoilState } from 'recoil';
+import { collectionListState } from './Provider';
 import { getCollectionList } from '../services/lambda-service';
 
 import './collectionList.scss';
-import { useRecoilState } from 'recoil';
-import { initialState } from './Provider';
 
 const CollectionList = ({ query }) => {
-  const [state, setState] = useRecoilState(initialState);
+  const [state, setState] = useRecoilState(collectionListState);
   const [ref, inView] = useInView({
     triggerOnce: false,
     rootMargin: '0px'
   });
 
   const fetchMore = async () => {
-    const { collectionListPage, perPage } = state;
+    const { page, perPage } = state;
     let results = [];
-    const json = await getCollectionList({ page: collectionListPage, perPage, query });
+    const json = await getCollectionList({ page: page, perPage, query });
     if (json.results) {
       results = json.results.map(({ id, title, cover_photo: coverPhoto, total_photos: totalPhotos, links, user }) =>
         ({ id, title, coverPhoto, totalPhotos, links, user }));
+      if(json.results.length < perPage) {
+        setState({
+          ...state,
+          endOfData: true
+        })
+      }
+    }
+    if(json.error) {
+      setState({
+        ...state,
+        error: true
+      })
     }
     setState({
       ...state,
-      collectionListPage: collectionListPage + 1,
+      page: page + 1,
       collectionListItems: [...state.collectionListItems, ...results]
     });
   };
@@ -84,15 +96,17 @@ const CollectionList = ({ query }) => {
           </Col>
         </Row>
       ))}
-      <Row>
-        <Col>
-          <div ref={ref} className="text-center">
-            <Spinner animation="border" role="status">
-              <span className="sr-only">Loading...</span>
-            </Spinner>
-          </div>
-        </Col>
-      </Row>
+      {(!state.error && !state.endOfData) &&
+        <Row>
+          <Col>
+            <div ref={ref} className="text-center">
+              <Spinner animation="border" role="status">
+                <span className="sr-only">Loading...</span>
+              </Spinner>
+            </div>
+          </Col>
+        </Row>
+      }
     </>
   )
 }

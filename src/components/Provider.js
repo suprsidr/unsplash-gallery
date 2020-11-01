@@ -8,12 +8,20 @@ import {
 export const initialState = atom({
   key: 'initialState',
   default: {
-    collectionListItems: [],
-    collectionListPage: 1,
     photoItems: [],
     page: 1,
     perPage: 30,
-    query: '',
+    endOfData: false
+  }
+});
+
+export const collectionListState = atom({
+  key: 'collectionListState',
+  default: {
+    collectionListItems: [],
+    page: 1,
+    perPage: 10,
+    error: false,
     endOfData: false
   }
 });
