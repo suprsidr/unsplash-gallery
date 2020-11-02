@@ -27,7 +27,12 @@ const Router = () => {
       <CollectionImageData id={id} >
         <PhotoGrid />
       </CollectionImageData>
-    )
+    ),
+    '/search/:query': ({ query }) => (
+      <PhotoSearchData query={query} >
+        <PhotoGrid />
+      </PhotoSearchData>
+    ),
   };
   /* eslint-enable */
 

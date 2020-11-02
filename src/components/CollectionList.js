@@ -66,6 +66,7 @@ const CollectionList = ({ query }) => {
       <Row>
         <Col className="text-center">
           <h2 className="collection-title">Collection results for: &quot;{query}&quot;</h2>
+          <p>Perform a <A href={`/search/${query}`}>raw photo search</A> instead.</p>
         </Col>
       </Row>
       {state.collectionListItems.map((collectionItem, index) => (
