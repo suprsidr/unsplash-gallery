@@ -1,41 +1,45 @@
-import React, { useState } from 'react';
+import React from 'react';
 import propTypes from 'prop-types';
+import {
+  RecoilRoot,
+  atom
+} from 'recoil';
 
-export const AppContext = React.createContext();
-
-export const initialState = {
+export const initialPhotoState = {
   photoItems: [],
-  page: 0,
-  perPage: 30
-};
+  page: 1,
+  perPage: 30,
+  endOfData: false
+}
 
-const Provider = ({ children, appState = initialState }) => {
-  const [state, setState] = useState(appState);
+export const initialState = atom({
+  key: 'initialState',
+  default: {
+    ...initialPhotoState
+  }
+});
 
-  /*
-   * the setState we get from the hook does not do the shallow merge.
-   */
-  const updateState = newState => {
-    setState({
-      ...state,
-      ...newState
-    });
-  };
+export const initialCollectionListState = {
+  collectionListItems: [],
+  page: 1,
+  perPage: 10,
+  error: false,
+  endOfData: false
+}
 
-  return (
-    <AppContext.Provider
-      value={{
-        state,
-        setState: updateState
-      }}
-    >
-      {children}
-    </AppContext.Provider>
-  );
-};
+export const collectionListState = atom({
+  key: 'collectionListState',
+  default: {
+    ...initialCollectionListState
+  }
+});
+
+const Provider = ({ children }) => (
+  <RecoilRoot>
+    {children}
+  </RecoilRoot>);
 
 Provider.propTypes = {
-  appState: propTypes.object,
   children: propTypes.oneOfType([
     propTypes.arrayOf(propTypes.node),
     propTypes.node

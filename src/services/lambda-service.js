@@ -5,7 +5,17 @@ export const getDownloadUrl = async id => {
   return await response.json();
 }
 
-export const getCollection = async ({ page, perPage, query }) => {
+export const getPhotos = async ({ page, perPage, query }) => {
   const response = await fetch(`${LAMBDA_URL}?page=${page}&per_page=${perPage}&query=${query}&order_by=latest&orientation=portrait&sig=${Math.round(Math.random() * 10000)}`);
+  return await response.json();
+}
+
+export const getCollectionList = async ({ page, perPage, query }) => {
+  const response = await fetch(`${LAMBDA_URL}?page=${page}&per_page=${perPage}&collection_query=${query}`);
+  return await response.json();
+}
+
+export const getCollectionPhotos = async ({ page, perPage, id }) => {
+  const response = await fetch(`${LAMBDA_URL}?page=${page}&per_page=${perPage}&collection_id=${id}`);
   return await response.json();
 }

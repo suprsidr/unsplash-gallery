@@ -1,24 +1,24 @@
-import React, { useEffect, useContext, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 import Masonry from 'react-masonry-css';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Image from 'react-bootstrap/Image';
 import Modal from 'react-bootstrap/Modal';
-import Navbar from 'react-bootstrap/Navbar';
-import Nav from 'react-bootstrap/Nav';
 import { BsFillCaretLeftFill, BsFillCaretRightFill } from 'react-icons/bs';
 import Spinner from 'react-bootstrap/Spinner';
-import { AppContext } from './Provider';
-import { getCollection } from '../services/lambda-service';
+import { useRecoilValue } from 'recoil';
+import { initialState } from './Provider';
+import { AppNavBar } from './AppNavBar';
 
-import './imageGrid.scss';
+import './photoGrid.scss';
 
-const ImageGrid = ({ query }) => {
-  const { state, setState } = useContext(AppContext);
+const PhotoGrid = ({ fetchMore, error }) => {
+  const state  = useRecoilValue(initialState);
   const [show, setShow] = useState(false);
   const [current, setCurrent] = useState();
   const [loading, setLoading] = useState(false);
+  const [observe, setObserve] = useState(true);
 
   const [modalState, setModalState] = useState({
     id: '',
@@ -38,37 +38,27 @@ const ImageGrid = ({ query }) => {
 
   useEffect(() => {
     if (inView) {
-      async function fetchMore() {
-        const { page, perPage } = state;
-        let results = [];
-        const json = await getCollection({ page, perPage, query });
-        if (json.results) {
-          results = json.results.map(({ id, description, alt_description: altDescription, urls, links, likes, user }) =>
-            ({ id, description, altDescription, urls, links, likes, user }));
-        }
-        if (json.error) {
-          document.querySelector('.my-masonry-grid').style.height = '100vh';
-          setModalState({
-            id: 12345,
-            description: 'Opps! Something went wrong',
-            altDescription: '',
-            urls: {
-              full: '/broken.jpg'
-            },
-            links: {},
-            likes: -500,
-            user: {
-              first_name: 'Bad',
-              last_name: 'Robot'
-            }
-          });
-          setShow(true);
-        }
-        setState({ page: page + 1, photoItems: [...state.photoItems, ...results] });
-      }
       fetchMore();
     }
-  }, [inView]); // eslint-disable-line react-hooks/exhaustive-deps
+    if (error) {
+      setObserve(false);
+      setModalState({
+        id: 12345,
+        description: 'Opps! Something went wrong',
+        altDescription: '',
+        urls: {
+          full: '/broken.jpg'
+        },
+        links: {},
+        likes: -500,
+        user: {
+          first_name: 'Bad',
+          last_name: 'Robot'
+        }
+      });
+      setShow(true);
+    }
+  }, [inView, error]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const breakpointColumnsObj = {
     default: 5,
@@ -108,13 +98,11 @@ const ImageGrid = ({ query }) => {
 
   return (
     <>
-      <Navbar bg="light" fixed="top">
-        <Nav className="mr-auto">
-          <Nav.Link href="/">Home</Nav.Link>
-          {query === 'cats' && <Nav.Link href="/dogs">Dogs</Nav.Link>}
-          {query === 'dogs' && <Nav.Link href="/cats">Cats</Nav.Link>}
-        </Nav>
-      </Navbar>
+      <Row>
+        <Col>
+          <AppNavBar />
+        </Col>
+      </Row>
       <Row>
         <Col>
           <Masonry
@@ -145,9 +133,9 @@ const ImageGrid = ({ query }) => {
               <Col>
                 <Image onLoad={() => setLoading(false)} src={modalState.urls.full} alt={modalState.description || modalState.altDescription || 'No description'} thumbnail />
                 {loading &&
-                <div className="imageLoading text-center">
-                  <Spinner animation="grow" variant="warning" />
-                </div>}
+                  <div className="imageLoading text-center">
+                    <Spinner animation="grow" variant="warning" />
+                  </div>}
                 <div className="arrows">
                   <div>
                     <span className="float-left" onClick={(e) => prev(e)}><BsFillCaretLeftFill size={96} /></span>
@@ -164,17 +152,19 @@ const ImageGrid = ({ query }) => {
           </Modal.Body>
         </Modal>
       </Row>
-      <Row>
-        <Col>
-          <div ref={ref} className="text-center">
-            <Spinner animation="border" role="status">
-              <span className="sr-only">Loading...</span>
-            </Spinner>
-          </div>
-        </Col>
-      </Row>
+      {(observe && !state.endOfData) &&
+        <Row>
+          <Col>
+            <div ref={ref} className="text-center">
+              <Spinner animation="border" role="status">
+                <span className="sr-only">Loading...</span>
+              </Spinner>
+            </div>
+          </Col>
+        </Row>
+      }
     </>
   );
 }
 
-export default ImageGrid;
+export default PhotoGrid;
