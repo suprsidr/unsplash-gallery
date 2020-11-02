@@ -1,5 +1,5 @@
 import '@testing-library/jest-dom/extend-expect';
-import React, { useContext } from 'react';
+import React from 'react';
 import { render } from '@testing-library/react';
 import Provider, { initialState, initialPhotoState } from '../Provider';
 import { useRecoilValue } from 'recoil';
