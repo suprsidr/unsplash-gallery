@@ -1,10 +1,11 @@
 import '@testing-library/jest-dom/extend-expect';
 import React, { useContext } from 'react';
 import { render } from '@testing-library/react';
-import Provider, { AppContext, initialState } from '../Provider';
+import Provider, { initialState, initialPhotoState } from '../Provider';
+import { useRecoilValue } from 'recoil';
 
 const TestApp = () => {
-  const { state } = useContext(AppContext);
+  const state = useRecoilValue(initialState);
 
   return <h3>{state.perPage}</h3>;
 };
@@ -17,7 +18,7 @@ describe('The Provider component', () => {
       </Provider>
     );
     expect(container.querySelector('h3')).toHaveTextContent(
-      initialState.perPage
+      initialPhotoState.perPage
     );
   });
 });
