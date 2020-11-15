@@ -1,5 +1,7 @@
 import React, { useEffect } from 'react'
 import { useRecoilState } from 'recoil';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 import { getPhotos } from '../services/lambda-service';
 import { initialState, initialPhotoState } from './Provider';
 
@@ -32,7 +34,20 @@ const PhotosSearchData = ({ children, query }) => {
     });
   }
 
-  return React.cloneElement(children, { fetchMore, error });
+  return (
+    <>
+      {query &&
+        <Row style={{ marginTop: '56px' }}>
+          <Col>
+            <div className="text-center">
+              <h4>Search results for &quot;{query}&quot;</h4>
+              <p>&nbsp;</p>
+            </div>
+          </Col>
+        </Row>}
+      { React.cloneElement(children, { fetchMore, error })}
+    </>
+  )
 }
 
 export default PhotosSearchData;
