@@ -138,8 +138,8 @@ const PhotoGrid = ({ fetchMore, error }) => {
                   </div>}
                 <div className="arrows">
                   <div>
-                    <span className="float-left" onClick={(e) => prev(e)}><BsFillCaretLeftFill size={96} /></span>
-                    <span className="float-right" onClick={(e) => next(e)}><BsFillCaretRightFill size={96} /></span>
+                    <span className="float-left icon" onClick={(e) => prev(e)}><BsFillCaretLeftFill size={96} /></span>
+                    <span className="float-right icon" onClick={(e) => next(e)}><BsFillCaretRightFill size={96} /></span>
                   </div>
                 </div>
               </Col>
