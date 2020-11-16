@@ -34,6 +34,7 @@ const AppNavBar = () => {
     <Navbar variant={theme} bg={theme} fixed="top">
       <Nav className="mr-auto">
         <Nav.Link href="/" onClick={e => goto(e, '/')}>Home</Nav.Link>
+        <Nav.Link href="/about" onClick={e => goto(e, '/about')}>About</Nav.Link>
         <Nav.Link href="/collections/dogs" onClick={e => goto(e, '/collections/dogs')}>Dogs</Nav.Link>
         <Nav.Link href="/collections/cats" onClick={e => goto(e, '/collections/cats')}>Cats</Nav.Link>
       </Nav>

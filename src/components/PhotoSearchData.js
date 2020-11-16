@@ -37,7 +37,7 @@ const PhotosSearchData = ({ children, query }) => {
   return (
     <>
       {query &&
-        <Row style={{ marginTop: '56px' }}>
+        <Row>
           <Col>
             <div className="text-center">
               <h4>Search results for &quot;{query}&quot;</h4>

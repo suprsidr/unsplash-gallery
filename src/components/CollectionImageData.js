@@ -57,7 +57,7 @@ const CollectionImageData = ({ children, id }) => {
   return (
     <>
       {collectionInfo &&
-        <Row style={{ marginTop: '56px' }}>
+        <Row>
           <Col>
             <div className="text-center">
               <h4>{collectionInfo.title || 'No title'}</h4>

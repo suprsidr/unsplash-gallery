@@ -2,6 +2,7 @@ import React from 'react';
 import { useRoutes } from 'hookrouter';
 
 import HomePage from './HomePage';
+import About from './About';
 import NotFound from './NotFound';
 import CollectionList from './CollectionList';
 import CollectionImageData from './CollectionImageData';
@@ -12,6 +13,7 @@ const Router = () => {
   /* eslint-disable */
   const routes = {
     '/': () => <HomePage />,
+    '/about': () => <About />,
     '/cats': () => (
       <PhotoSearchData query="cats" >
         <PhotoGrid />

@@ -8,7 +8,6 @@ import Spinner from 'react-bootstrap/Spinner';
 import { useRecoilState } from 'recoil';
 import { collectionListState, initialCollectionListState } from './Provider';
 import { getCollectionList } from '../services/lambda-service';
-import AppNavBar from './AppNavBar';
 
 import './collectionList.scss';
 
@@ -58,11 +57,6 @@ const CollectionList = ({ query }) => {
 
   return (
     <>
-      <Row>
-        <Col>
-          <AppNavBar />
-        </Col>
-      </Row>
       <Row>
         <Col className="text-center">
           <h2 className="collection-title">Collection results for: &quot;{query}&quot;</h2>

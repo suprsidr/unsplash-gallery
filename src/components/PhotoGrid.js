@@ -9,7 +9,6 @@ import { BsFillCaretLeftFill, BsFillCaretRightFill } from 'react-icons/bs';
 import Spinner from 'react-bootstrap/Spinner';
 import { useRecoilValue } from 'recoil';
 import { initialState } from './Provider';
-import AppNavBar from './AppNavBar';
 
 import './photoGrid.scss';
 
@@ -98,11 +97,6 @@ const PhotoGrid = ({ fetchMore, error }) => {
 
   return (
     <>
-      <Row>
-        <Col>
-          <AppNavBar />
-        </Col>
-      </Row>
       <Row>
         <Col>
           <Masonry
