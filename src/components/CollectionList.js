@@ -8,7 +8,7 @@ import Spinner from 'react-bootstrap/Spinner';
 import { useRecoilState } from 'recoil';
 import { collectionListState, initialCollectionListState } from './Provider';
 import { getCollectionList } from '../services/lambda-service';
-import { AppNavBar } from './AppNavBar';
+import AppNavBar from './AppNavBar';
 
 import './collectionList.scss';
 
@@ -66,7 +66,7 @@ const CollectionList = ({ query }) => {
       <Row>
         <Col className="text-center">
           <h2 className="collection-title">Collection results for: &quot;{query}&quot;</h2>
-          <p>Perform a <A href={`/search/${query}`}>raw photo search</A> instead.</p>
+          <p>Perform a <A className="search-text" href={`/search/${query}`}>raw photo search</A> instead.</p>
         </Col>
       </Row>
       {state.collectionListItems.map((collectionItem, index) => (
@@ -83,6 +83,7 @@ const CollectionList = ({ query }) => {
               <p className="by-line">By: {`${collectionItem.user.first_name || ''} ${collectionItem.user.last_name || ''}`}</p>
             </div>
           </Col>
+          <p>&nbsp;</p>
         </Row>
       ))}
       {(!state.error && !state.endOfData) &&

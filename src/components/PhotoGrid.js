@@ -9,7 +9,7 @@ import { BsFillCaretLeftFill, BsFillCaretRightFill } from 'react-icons/bs';
 import Spinner from 'react-bootstrap/Spinner';
 import { useRecoilValue } from 'recoil';
 import { initialState } from './Provider';
-import { AppNavBar } from './AppNavBar';
+import AppNavBar from './AppNavBar';
 
 import './photoGrid.scss';
 
@@ -83,7 +83,7 @@ const PhotoGrid = ({ fetchMore, error }) => {
   const prev = e => {
     let index = current - 1;
     if (index < 0) {
-      index = 0;
+      index = state.photoItems.length - 1;
     }
     showModal(e, index);
   }
@@ -91,7 +91,7 @@ const PhotoGrid = ({ fetchMore, error }) => {
   const next = e => {
     let index = current + 1;
     if (index === state.photoItems.length) {
-      index = state.photoItems.length - 1;
+      index = 0;
     }
     showModal(e, index);
   }
