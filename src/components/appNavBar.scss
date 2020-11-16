@@ -4,7 +4,15 @@
     background-color: #ffc107 !important;
 }
 
+.custom-control-input ~ .custom-control-label {
+  color: rgba(0, 0, 0, 0.5);
+}
+
 body.dark, body.dark .modal-content {
   background: #222;
   color: #fff;
+
+  .custom-control-input ~ .custom-control-label {
+    color: rgba(255, 255, 255, 0.5);
+  }
 }
