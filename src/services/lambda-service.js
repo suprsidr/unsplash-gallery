@@ -24,3 +24,8 @@ export const getCollectionInfo = async ({ id }) => {
   const response = await fetch(`${LAMBDA_URL}?collection_info=${id}`);
   return await response.json();
 }
+
+export const getUserCollections = async ({ page, perPage, userName }) => {
+  const response = await fetch(`${LAMBDA_URL}?page=${page}&per_page=${perPage}&user_name=${userName}`);
+  return await response.json();
+}

@@ -61,8 +61,8 @@ const CollectionImageData = ({ children, id }) => {
           <Col>
             <div className="text-center">
               <h4>{collectionInfo.title || 'No title'}</h4>
-              <p>Total Photos: {collectionInfo.totalPhotos}</p>
               <p className="by-line">By: {`${collectionInfo.user.first_name || ''} ${collectionInfo.user.last_name || ''}`}</p>
+              <p>Total Photos: {collectionInfo.totalPhotos}</p>
             </div>
           </Col>
         </Row>}

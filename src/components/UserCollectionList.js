@@ -7,11 +7,11 @@ import Image from 'react-bootstrap/Image';
 import Spinner from 'react-bootstrap/Spinner';
 import { useRecoilState } from 'recoil';
 import { collectionListState, initialCollectionListState } from './Provider';
-import { getCollectionList } from '../services/lambda-service';
+import { getUserCollections } from '../services/lambda-service';
 
 import './collectionList.scss';
 
-const CollectionList = ({ query }) => {
+const CollectionList = ({ userName }) => {
   const [state, setState] = useRecoilState(collectionListState);
   const [ref, inView] = useInView({
     triggerOnce: false,
@@ -20,12 +20,12 @@ const CollectionList = ({ query }) => {
 
   useEffect(() => {
     setState(initialCollectionListState)
-  }, [query]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [userName]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const fetchMore = async () => {
     const { page, perPage } = state;
     let results = [];
-    const json = await getCollectionList({ page: page, perPage, query });
+    const json = await getUserCollections({ page: page, perPage, userName });
     if (json.results) {
       results = json.results.map(({ id, title, cover_photo: coverPhoto, total_photos: totalPhotos, links, user }) =>
         ({ id, title, coverPhoto, totalPhotos, links, user }));
@@ -47,12 +47,14 @@ const CollectionList = ({ query }) => {
 
   return (
     <>
-      <Row>
-        <Col className="text-center">
-          <h2 className="collection-title">Collection results for: &quot;{query}&quot;</h2>
-          <p>Perform a <A className="search-text" href={`/search/${query}`}>raw photo search</A> instead.</p>
-        </Col>
-      </Row>
+      {(state.collectionListItems && state.collectionListItems[0]) &&
+        <Row>
+          <Col className="text-center">
+          <h2 className="collection-title">Collections by <span className="by-line">{`${state.collectionListItems[0].user.first_name || ''} ${state.collectionListItems[0].user.last_name || ''}`}</span></h2>
+            <p>&nbsp;</p>
+          </Col>
+        </Row>
+      }
       {state.collectionListItems.map((collectionItem, index) => (
         <Row key={collectionItem.id + index}>
           <Col xs={12} md={6}>
@@ -64,7 +66,7 @@ const CollectionList = ({ query }) => {
             <div className="text-center">
               <h5>{collectionItem.title || 'No title'}</h5>
               <p>Total Photos: {collectionItem.totalPhotos}</p>
-              <p className="by-line">By: <A href={`/users/${collectionItem.user.username}`}>{`${collectionItem.user.first_name || ''} ${collectionItem.user.last_name || ''}`}</A></p>
+              <p className="by-line">By: {`${collectionItem.user.first_name || ''} ${collectionItem.user.last_name || ''}`}</p>
             </div>
           </Col>
           <p>&nbsp;</p>

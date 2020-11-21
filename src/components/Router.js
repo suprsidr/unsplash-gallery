@@ -8,6 +8,7 @@ import CollectionList from './CollectionList';
 import CollectionImageData from './CollectionImageData';
 import PhotoSearchData from './PhotoSearchData';
 import PhotoGrid from './PhotoGrid';
+import UserCollectionList from './UserCollectionList';
 
 const Router = () => {
   /* eslint-disable */
@@ -25,6 +26,7 @@ const Router = () => {
       </PhotoSearchData>
     ),
     '/collections/:query': ({ query }) => <CollectionList query={query} />,
+    '/users/:userName': ({ userName }) => <UserCollectionList userName={userName} />,
     '/photos/:id': ({ id }) => (
       <CollectionImageData id={id} >
         <PhotoGrid />
