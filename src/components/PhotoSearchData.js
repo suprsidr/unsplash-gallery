@@ -1,13 +1,12 @@
-import React, { useEffect } from 'react'
-import { useRecoilState } from 'recoil';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
-import { getPhotos } from '../services/lambda-service';
-import { initialState, initialPhotoState } from './Provider';
+import React, { useEffect } from "react";
+import { useRecoilState } from "recoil";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+import { getPhotos } from "../services/lambda-service";
+import { initialState, initialPhotoState } from "./Provider";
 
 const PhotosSearchData = ({ children, query }) => {
-
-  const [ state, setState ] = useRecoilState(initialState);
+  const [state, setState] = useRecoilState(initialState);
 
   useEffect(() => {
     setState(initialPhotoState);
@@ -20,8 +19,17 @@ const PhotosSearchData = ({ children, query }) => {
     let results = [];
     const json = await getPhotos({ page, perPage, query });
     if (json.results) {
-      results = json.results.map(({ id, description, alt_description: altDescription, urls, links, likes, user }) =>
-        ({ id, description, altDescription, urls, links, likes, user }))
+      results = json.results.map(
+        ({
+          id,
+          description,
+          alt_description: altDescription,
+          urls,
+          links,
+          likes,
+          user,
+        }) => ({ id, description, altDescription, urls, links, likes, user })
+      );
     }
 
     error = json.error;
@@ -30,13 +38,13 @@ const PhotosSearchData = ({ children, query }) => {
       ...state,
       page: page + 1,
       photoItems: [...state.photoItems, ...results],
-      endOfData: results.length < perPage
+      endOfData: results.length < perPage,
     });
-  }
+  };
 
   return (
     <>
-      {query &&
+      {query && (
         <Row>
           <Col>
             <div className="text-center">
@@ -44,10 +52,11 @@ const PhotosSearchData = ({ children, query }) => {
               <p>&nbsp;</p>
             </div>
           </Col>
-        </Row>}
-      { React.cloneElement(children, { fetchMore, error })}
+        </Row>
+      )}
+      {React.cloneElement(children, { fetchMore, error })}
     </>
-  )
-}
+  );
+};
 
 export default PhotosSearchData;

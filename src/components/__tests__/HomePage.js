@@ -1,11 +1,11 @@
-import '@testing-library/jest-dom/extend-expect';
-import React from 'react';
-import { render } from '@testing-library/react';
-import HomePage from '../HomePage';
-import Provider from '../Provider';
+import "@testing-library/jest-dom/extend-expect";
+import React from "react";
+import { render } from "@testing-library/react";
+import HomePage from "../HomePage";
+import Provider from "../Provider";
 
-describe('The HomePage component', () => {
-  test('should render h1, h2 and the animal links', () => {
+describe("The HomePage component", () => {
+  test("should render h1, h2 and the animal links", () => {
     const { getByText, getByAltText } = render(
       <Provider>
         <HomePage />

@@ -7,7 +7,7 @@
  */
 export function setupIntersectionObserverMock({
   root = null,
-  rootMargin = '',
+  rootMargin = "",
   thresholds = [],
   disconnect = () => null,
   observe = () => null,
@@ -26,15 +26,15 @@ export function setupIntersectionObserverMock({
     }
   }
 
-  Object.defineProperty(window, 'IntersectionObserver', {
+  Object.defineProperty(window, "IntersectionObserver", {
     writable: true,
     configurable: true,
-    value: MockIntersectionObserver
+    value: MockIntersectionObserver,
   });
 
-  Object.defineProperty(global, 'IntersectionObserver', {
+  Object.defineProperty(global, "IntersectionObserver", {
     writable: true,
     configurable: true,
-    value: MockIntersectionObserver
+    value: MockIntersectionObserver,
   });
 }

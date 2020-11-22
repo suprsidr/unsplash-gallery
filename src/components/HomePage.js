@@ -1,32 +1,31 @@
-import React, { useRef } from 'react';
-import { A, navigate } from 'hookrouter';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
-import Image from 'react-bootstrap/Image';
-import InputGroup from 'react-bootstrap/InputGroup';
-import FormControl from 'react-bootstrap/FormControl';
-import Button from 'react-bootstrap/Button';
-import { BsSearch } from 'react-icons/bs';
+import React, { useRef } from "react";
+import { A, navigate } from "hookrouter";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+import Image from "react-bootstrap/Image";
+import InputGroup from "react-bootstrap/InputGroup";
+import FormControl from "react-bootstrap/FormControl";
+import Button from "react-bootstrap/Button";
+import { BsSearch } from "react-icons/bs";
 
-import './homePage.scss';
+import "./homePage.scss";
 
 const HomePage = () => {
-
   const searchInput = useRef();
 
   const onKeyUpHandler = (e) => {
     if (e.charCode === 13) {
       if (e.target.value) {
-        navigate(`/collections/${searchInput.current.value}`)
+        navigate(`/collections/${searchInput.current.value}`);
       }
     }
-  }
+  };
 
   const onClickHandler = () => {
     if (searchInput.current.value) {
-      navigate(`/collections/${searchInput.current.value}`)
+      navigate(`/collections/${searchInput.current.value}`);
     }
-  }
+  };
 
   return (
     <>
@@ -62,7 +61,9 @@ const HomePage = () => {
                 ref={searchInput}
               />
               <InputGroup.Append>
-                <Button onClick={onClickHandler} variant="outline-warning"><BsSearch /></Button>
+                <Button onClick={onClickHandler} variant="outline-warning">
+                  <BsSearch />
+                </Button>
               </InputGroup.Append>
             </InputGroup>
           </div>
@@ -70,7 +71,7 @@ const HomePage = () => {
         <Col xs={12} md={3} lg={4}></Col>
       </Row>
     </>
-  )
-}
+  );
+};
 
 export default HomePage;
