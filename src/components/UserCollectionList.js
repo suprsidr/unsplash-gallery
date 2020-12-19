@@ -25,7 +25,7 @@ const CollectionList = ({ userName }) => {
   const fetchMore = async () => {
     const { page, perPage } = state;
     let results = [];
-    const json = await getUserCollections({ page: page, perPage, userName });
+    const json = await getUserCollections({ page, userName });
     if (json.results) {
       results = json.results.map(
         ({

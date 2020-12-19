@@ -17,7 +17,7 @@ const PhotosSearchData = ({ children, query }) => {
   const fetchMore = async () => {
     const { page, perPage } = state;
     let results = [];
-    const json = await getPhotos({ page, perPage, query });
+    const json = await getPhotos({ page, query });
     if (json.results) {
       results = json.results.map(
         ({

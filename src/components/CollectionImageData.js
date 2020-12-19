@@ -50,7 +50,7 @@ const CollectionImageData = ({ children, id }) => {
   const fetchMore = async () => {
     const { page, perPage } = state;
     let results = [];
-    const json = await getCollectionPhotos({ page, perPage, id });
+    const json = await getCollectionPhotos({ page, id });
     if (json.results) {
       results = json.results.map(
         ({
