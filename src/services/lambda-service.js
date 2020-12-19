@@ -1,42 +1,40 @@
 const LAMBDA_URL =
-  "https://8odnccq66m.execute-api.us-east-1.amazonaws.com/dev/index";
+  "https://3lxfopan2i.execute-api.us-east-1.amazonaws.com";
 
 export const getDownloadUrl = async (id) => {
-  const response = await fetch(`${LAMBDA_URL}?id=${id}`);
+  const response = await fetch(`${LAMBDA_URL}/download/${id}`);
   return await response.json();
 };
 
-export const getPhotos = async ({ page, perPage, query }) => {
+export const getPhotos = async ({ page, query }) => {
   const response = await fetch(
-    `${LAMBDA_URL}?page=${page}&per_page=${perPage}&query=${query}&order_by=latest&orientation=portrait&sig=${Math.round(
-      Math.random() * 10000
-    )}`
+    `${LAMBDA_URL}/search/photos/${query}/${page}`
   );
   return await response.json();
 };
 
-export const getCollectionList = async ({ page, perPage, query }) => {
+export const getCollectionList = async ({ page, query }) => {
   const response = await fetch(
-    `${LAMBDA_URL}?page=${page}&per_page=${perPage}&collection_query=${query}`
+    `${LAMBDA_URL}/search/collections/${query}/${page}`
   );
   return await response.json();
 };
 
-export const getCollectionPhotos = async ({ page, perPage, id }) => {
+export const getCollectionPhotos = async ({ page, id }) => {
   const response = await fetch(
-    `${LAMBDA_URL}?page=${page}&per_page=${perPage}&collection_id=${id}`
+    `${LAMBDA_URL}/collections/${id}/photos/${page}`
   );
   return await response.json();
 };
 
 export const getCollectionInfo = async ({ id }) => {
-  const response = await fetch(`${LAMBDA_URL}?collection_info=${id}`);
+  const response = await fetch(`${LAMBDA_URL}/collections/${id}`);
   return await response.json();
 };
 
-export const getUserCollections = async ({ page, perPage, userName }) => {
+export const getUserCollections = async ({ page, userName }) => {
   const response = await fetch(
-    `${LAMBDA_URL}?page=${page}&per_page=${perPage}&user_name=${userName}`
+    `${LAMBDA_URL}/users/${userName}/collections/${page}`
   );
   return await response.json();
 };
