@@ -1,5 +1,4 @@
-const LAMBDA_URL =
-  "https://3lxfopan2i.execute-api.us-east-1.amazonaws.com";
+const LAMBDA_URL = "https://3lxfopan2i.execute-api.us-east-1.amazonaws.com";
 
 export const getDownloadUrl = async (id) => {
   const response = await fetch(`${LAMBDA_URL}/download/${id}`);
@@ -7,9 +6,7 @@ export const getDownloadUrl = async (id) => {
 };
 
 export const getPhotos = async ({ page, query }) => {
-  const response = await fetch(
-    `${LAMBDA_URL}/search/photos/${query}/${page}`
-  );
+  const response = await fetch(`${LAMBDA_URL}/search/photos/${query}/${page}`);
   return await response.json();
 };
 
@@ -24,6 +21,11 @@ export const getCollectionPhotos = async ({ page, id }) => {
   const response = await fetch(
     `${LAMBDA_URL}/collections/${id}/photos/${page}`
   );
+  return await response.json();
+};
+
+export const getRelatedCollections = async ({ id }) => {
+  const response = await fetch(`${LAMBDA_URL}/collections/${id}/related`);
   return await response.json();
 };
 

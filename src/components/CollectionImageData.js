@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
+import { A } from "hookrouter";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import {
@@ -89,6 +90,11 @@ const CollectionImageData = ({ children, id }) => {
                 }`}
               </p>
               <p>Total Photos: {collectionInfo.totalPhotos}</p>
+              <p>
+                <A className="search-text" href={`/related/${id}`}>
+                  Related
+                </A>
+              </p>
             </div>
           </Col>
         </Row>

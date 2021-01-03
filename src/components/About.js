@@ -65,7 +65,18 @@ export default function About() {
             <li>
               Ability to search Unsplash collections and/or a raw image search.
             </li>
-            <li>Use AWS Lambda for my API</li>
+            <li>User collections.</li>
+            <li>Related collections.</li>
+            <li>
+              Use AWS{" "}
+              <a
+                href="https://github.com/suprsidr/unsplash-lambda"
+                title="unsplash-lambda"
+              >
+                Lambda
+              </a>{" "}
+              for my API
+            </li>
             <li>
               Gave{" "}
               <a href="https://recoiljs.org/" title="Recoil.js">
