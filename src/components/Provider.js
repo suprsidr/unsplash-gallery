@@ -6,6 +6,7 @@ export const initialPhotoState = {
   photoItems: [],
   page: 1,
   perPage: 30,
+  error: false,
   endOfData: false,
 };
 

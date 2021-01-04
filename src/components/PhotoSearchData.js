@@ -12,8 +12,6 @@ const PhotosSearchData = ({ children, query }) => {
     setState(initialPhotoState);
   }, [query]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  let error = false;
-
   const fetchMore = async () => {
     const { page, perPage } = state;
     let results = [];
@@ -32,13 +30,12 @@ const PhotosSearchData = ({ children, query }) => {
       );
     }
 
-    error = json.error;
-
     setState({
       ...state,
       page: page + 1,
       photoItems: [...state.photoItems, ...results],
       endOfData: results.length < perPage,
+      error: json.error,
     });
   };
 
@@ -54,7 +51,7 @@ const PhotosSearchData = ({ children, query }) => {
           </Col>
         </Row>
       )}
-      {React.cloneElement(children, { fetchMore, error })}
+      {React.cloneElement(children, { fetchMore })}
     </>
   );
 };
