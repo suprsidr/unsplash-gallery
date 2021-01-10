@@ -26,6 +26,10 @@ const Page = () => {
         error: false,
       });
     }
+    // TODO what do I need to do to make this work without false invocations?
+    // if (collectionState.endOfData || photoState.endOfData) {
+    //   toast("Sorry no more.");
+    // }
   }, [collectionState, photoState]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
