@@ -8,6 +8,7 @@ export const initialPhotoState = {
   perPage: 30,
   error: false,
   endOfData: false,
+  showToastMessage: false
 };
 
 export const initialState = atom({
@@ -23,6 +24,7 @@ export const initialCollectionListState = {
   perPage: 10,
   error: false,
   endOfData: false,
+  showToastMessage: false
 };
 
 export const collectionListState = atom({

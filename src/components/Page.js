@@ -14,22 +14,27 @@ const Page = () => {
   );
   const [photoState, setPhotoState] = useRecoilState(initialState);
 
+  const showMessage = ({ endOfData, error }) => {
+    error && toast.error("Oh no something went wrong!");
+    endOfData && toast("Sorry no more.");
+  }
+
   useEffect(() => {
-    if (collectionState.error || photoState.error) {
-      toast.error("Oh no something went wrong!");
+    if (collectionState.showToastMessage) {
+      showMessage(collectionState);
       setCollectionState({
         ...collectionState,
-        error: false,
+        showToastMessage: false,
       });
+
+    }
+    if (photoState.showToastMessage) {
+      showMessage(photoState);
       setPhotoState({
         ...photoState,
-        error: false,
+        showToastMessage: false,
       });
     }
-    // TODO what do I need to do to make this work without false invocations?
-    // if (collectionState.endOfData || photoState.endOfData) {
-    //   toast("Sorry no more.");
-    // }
   }, [collectionState, photoState]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (

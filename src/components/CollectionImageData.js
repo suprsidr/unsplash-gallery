@@ -63,13 +63,14 @@ const CollectionImageData = ({ children, id }) => {
         }) => ({ id, description, altDescription, urls, links, likes, user })
       );
     }
-
+    const eod = !json.error && results.length < perPage;
     setState({
       ...state,
       page: page + 1,
       photoItems: [...state.photoItems, ...results],
-      endOfData: results.length < perPage,
+      endOfData: eod,
       error: json.error,
+      showToastMessage: (!!json.error || eod),
     });
   };
 

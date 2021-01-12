@@ -70,6 +70,7 @@ const RelatedCollectionList = ({ id }) => {
       collectionListItems: results,
       endOfData: true, // no pagenation for related
       error: json.error,
+      showToastMessage: !!json.error,
     });
   };
 
