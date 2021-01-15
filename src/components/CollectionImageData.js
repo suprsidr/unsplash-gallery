@@ -46,8 +46,6 @@ const CollectionImageData = ({ children, id }) => {
     }
   }, [id]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  let error = false;
-
   const fetchMore = async () => {
     const { page, perPage } = state;
     let results = [];
@@ -65,14 +63,14 @@ const CollectionImageData = ({ children, id }) => {
         }) => ({ id, description, altDescription, urls, links, likes, user })
       );
     }
-
-    error = json.error;
-
+    const eod = !json.error && results.length < perPage;
     setState({
       ...state,
       page: page + 1,
       photoItems: [...state.photoItems, ...results],
-      endOfData: results.length < perPage,
+      endOfData: eod,
+      error: json.error,
+      showToastMessage: (!!json.error || eod),
     });
   };
 
@@ -99,7 +97,7 @@ const CollectionImageData = ({ children, id }) => {
           </Col>
         </Row>
       )}
-      {React.cloneElement(children, { fetchMore, error })}
+      {React.cloneElement(children, { fetchMore })}
     </>
   );
 };

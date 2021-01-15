@@ -12,12 +12,11 @@ import { initialState } from "./Provider";
 
 import "./photoGrid.scss";
 
-const PhotoGrid = ({ fetchMore, error }) => {
+const PhotoGrid = ({ fetchMore }) => {
   const state = useRecoilValue(initialState);
   const [show, setShow] = useState(false);
   const [current, setCurrent] = useState();
   const [loading, setLoading] = useState(false);
-  const [observe, setObserve] = useState(true);
 
   const [modalState, setModalState] = useState({
     id: "",
@@ -39,25 +38,7 @@ const PhotoGrid = ({ fetchMore, error }) => {
     if (inView) {
       fetchMore();
     }
-    if (error) {
-      setObserve(false);
-      setModalState({
-        id: 12345,
-        description: "Opps! Something went wrong",
-        altDescription: "",
-        urls: {
-          full: "/broken.jpg",
-        },
-        links: {},
-        likes: -500,
-        user: {
-          first_name: "Bad",
-          last_name: "Robot",
-        },
-      });
-      setShow(true);
-    }
-  }, [inView, error]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [inView]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const breakpointColumnsObj = {
     default: 5,
@@ -109,24 +90,23 @@ const PhotoGrid = ({ fetchMore, error }) => {
             columnClassName="my-masonry-grid_column"
           >
             {state.photoItems.map((photoItem, index) => (
-              <div key={photoItem.id + index}>
-                <a
-                  data-testid={photoItem.id + index}
-                  href={photoItem.links.download}
-                  onClick={(e) => showModal(e, index)}
-                  className={current === index ? "current" : ""}
-                >
-                  <Image
-                    src={photoItem.urls.small}
-                    alt={
-                      photoItem.description ||
-                      photoItem.altDescription ||
-                      "No description"
-                    }
-                    thumbnail
-                  />
-                </a>
-              </div>
+              <a
+                key={photoItem.id + index}
+                data-testid={photoItem.id + index}
+                href={photoItem.links.download}
+                onClick={(e) => showModal(e, index)}
+                className={current === index ? "current" : ""}
+              >
+                <Image
+                  src={photoItem.urls.small}
+                  alt={
+                    photoItem.description ||
+                    photoItem.altDescription ||
+                    "No description"
+                  }
+                  thumbnail
+                />
+              </a>
             ))}
           </Masonry>
         </Col>
@@ -187,7 +167,7 @@ const PhotoGrid = ({ fetchMore, error }) => {
           </Modal.Body>
         </Modal>
       </Row>
-      {observe && !state.endOfData && (
+      {!state.error && !state.endOfData && (
         <Row>
           <Col>
             <div ref={ref} className="text-center">

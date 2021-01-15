@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { A } from "hookrouter";
-import { useInView } from "react-intersection-observer";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Image from "react-bootstrap/Image";
@@ -18,10 +17,6 @@ const RelatedCollectionList = ({ id }) => {
   const [state, setState] = useRecoilState(collectionListState);
   const [collectionInfo, setCollectionInfo] = useState(null);
   const { collectionListItems } = useRecoilValue(collectionListState);
-  const [ref, inView] = useInView({
-    triggerOnce: false,
-    rootMargin: "0px",
-  });
 
   // if we end up here from a direct link and not from collectionList we need to fetch collection info
   const fetchCollectionInfo = async () => {
@@ -51,6 +46,7 @@ const RelatedCollectionList = ({ id }) => {
 
   useEffect(() => {
     setState(initialCollectionListState);
+    fetchMore();
   }, [id]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const fetchMore = async () => {
@@ -71,17 +67,12 @@ const RelatedCollectionList = ({ id }) => {
     setState({
       ...state,
       page: 0,
-      collectionListItems: [...state.collectionListItems, ...results],
+      collectionListItems: results,
       endOfData: true, // no pagenation for related
       error: json.error,
+      showToastMessage: !!json.error,
     });
   };
-
-  useEffect(() => {
-    if (inView) {
-      fetchMore();
-    }
-  }, [inView]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <>
@@ -99,7 +90,6 @@ const RelatedCollectionList = ({ id }) => {
                   collectionInfo.user.first_name || ""
                 } ${collectionInfo.user.last_name || ""}`}</A>
               </p>
-              {/* <p><A className="search-text" href={`/related/${id}`}>Related</A></p> */}
             </div>
           </Col>
         </Row>
@@ -136,7 +126,7 @@ const RelatedCollectionList = ({ id }) => {
       {!state.error && !state.endOfData && (
         <Row>
           <Col>
-            <div ref={ref} className="text-center">
+            <div className="text-center">
               <Spinner animation="border" role="status">
                 <span className="sr-only">Loading...</span>
               </Spinner>

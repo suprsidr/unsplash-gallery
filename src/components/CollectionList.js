@@ -38,12 +38,14 @@ const CollectionList = ({ query }) => {
         }) => ({ id, title, coverPhoto, totalPhotos, links, user })
       );
     }
+    const eod = !json.error && results.length < perPage;
     setState({
       ...state,
       page: page + 1,
       collectionListItems: [...state.collectionListItems, ...results],
-      endOfData: (json.results || []).length < perPage,
+      endOfData: eod,
       error: json.error,
+      showToastMessage: (!!json.error || eod),
     });
   };
 
