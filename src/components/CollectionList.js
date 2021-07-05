@@ -63,43 +63,45 @@ const CollectionList = ({ query }) => {
             Collection results for: &quot;{query}&quot;
           </h2>
           <p>
-            Perform a{" "}
+            Perform a{' '}
             <A className="search-text" href={`/search/${query}`}>
               raw photo search
-            </A>{" "}
+            </A>{' '}
             instead.
           </p>
         </Col>
       </Row>
-      {state.collectionListItems.map((collectionItem, index) => (
-        <Row key={collectionItem.id + index}>
-          <Col xs={12} md={6}>
-            <A
-              data-testid={collectionItem.id + index}
-              href={`/photos/${collectionItem.id}`}
-            >
-              <Image
-                src={collectionItem.coverPhoto?.urls.small}
-                alt={collectionItem.title || "No title"}
-                thumbnail
-              />
-            </A>
-          </Col>
-          <Col xs={12} md={6} className="collection-info">
-            <div className="text-center">
-              <h5>{collectionItem.title || "No title"}</h5>
-              <p>Total Photos: {collectionItem.totalPhotos}</p>
-              <p className="by-line">
-                By:{" "}
-                <A href={`/users/${collectionItem.user.username}`}>{`${
-                  collectionItem.user.first_name || ""
-                } ${collectionItem.user.last_name || ""}`}</A>
-              </p>
-            </div>
-          </Col>
-          <p>&nbsp;</p>
-        </Row>
-      ))}
+      {state.collectionListItems
+        .filter((collectionItem) => collectionItem.totalPhotos > 0)
+        .map((collectionItem, index) => (
+          <Row key={collectionItem.id + index}>
+            <Col xs={12} md={6}>
+              <A
+                data-testid={collectionItem.id + index}
+                href={`/photos/${collectionItem.id}`}
+              >
+                <Image
+                  src={collectionItem.coverPhoto?.urls.small}
+                  alt={collectionItem.title || 'No title'}
+                  thumbnail
+                />
+              </A>
+            </Col>
+            <Col xs={12} md={6} className="collection-info">
+              <div className="text-center">
+                <h5>{collectionItem.title || 'No title'}</h5>
+                <p>Total Photos: {collectionItem.totalPhotos}</p>
+                <p className="by-line">
+                  By:{' '}
+                  <A href={`/users/${collectionItem.user.username}`}>{`${
+                    collectionItem.user.first_name || ''
+                  } ${collectionItem.user.last_name || ''}`}</A>
+                </p>
+              </div>
+            </Col>
+            <p>&nbsp;</p>
+          </Row>
+        ))}
       {!state.error && !state.endOfData && (
         <Row>
           <Col>
