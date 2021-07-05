@@ -35,8 +35,13 @@
 
 .modal-90w {
     width: 100%;
-    max-width: 90vw!important;
-    margin: .5rem auto!important;
+    max-width: 100vw!important;
+    height: 100vh !important;
+    margin: 0 auto!important;
+
+    .modal-content {
+      height: 100vh !important;
+    }
 
     img {
       max-height: 75vh;
