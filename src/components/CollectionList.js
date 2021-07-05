@@ -79,7 +79,7 @@ const CollectionList = ({ query }) => {
               href={`/photos/${collectionItem.id}`}
             >
               <Image
-                src={collectionItem.coverPhoto.urls.small}
+                src={collectionItem.coverPhoto?.urls.small}
                 alt={collectionItem.title || "No title"}
                 thumbnail
               />
