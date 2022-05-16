@@ -1,6 +1,6 @@
-import React from "react";
 import propTypes from "prop-types";
-import { RecoilRoot, atom } from "recoil";
+import React from "react";
+import { atom, RecoilRoot } from "recoil";
 
 export const initialPhotoState = {
   photoItems: [],
@@ -32,6 +32,11 @@ export const collectionListState = atom({
   default: {
     ...initialCollectionListState,
   },
+});
+
+export const themeState = atom({
+  key: 'themeState',
+  default: localStorage.getItem("savedTheme") || "light"
 });
 
 const Provider = ({ children }) => <RecoilRoot>{children}</RecoilRoot>;

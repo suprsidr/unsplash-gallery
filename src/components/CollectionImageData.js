@@ -1,16 +1,13 @@
+import { Link as A } from "raviger";
 import React, { useEffect, useState } from "react";
-import { useRecoilState, useRecoilValue } from "recoil";
-import { A } from "hookrouter";
-import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import Row from "react-bootstrap/Row";
+import { useRecoilState, useRecoilValue } from "recoil";
 import {
-  getCollectionPhotos,
-  getCollectionInfo,
+    getCollectionInfo, getCollectionPhotos
 } from "../services/lambda-service";
 import {
-  initialState,
-  initialPhotoState,
-  collectionListState,
+    collectionListState, initialPhotoState, initialState
 } from "./Provider";
 
 const CollectionImageData = ({ children, id }) => {

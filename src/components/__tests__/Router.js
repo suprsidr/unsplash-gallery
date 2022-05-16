@@ -1,11 +1,11 @@
 import "@testing-library/jest-dom/extend-expect";
+import { act, render } from "@testing-library/react";
+import { navigate } from "raviger";
 import React from "react";
-import { render, act } from "@testing-library/react";
-import { navigate } from "hookrouter";
-import Router from "../Router";
-import Provider from "../Provider";
-
 import { setupIntersectionObserverMock } from "../../mocks/mock-intersection-observer";
+import Provider from "../Provider";
+import Router from "../Router";
+
 
 beforeEach(() => setupIntersectionObserverMock());
 

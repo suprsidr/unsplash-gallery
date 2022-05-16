@@ -1,17 +1,16 @@
+import { Link as A } from "raviger";
 import React, { useEffect, useState } from "react";
-import { A } from "hookrouter";
-import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Image from "react-bootstrap/Image";
+import Row from "react-bootstrap/Row";
 import Spinner from "react-bootstrap/Spinner";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { collectionListState, initialCollectionListState } from "./Provider";
 import {
-  getRelatedCollections,
-  getCollectionInfo,
+    getCollectionInfo, getRelatedCollections
 } from "../services/lambda-service";
-
 import "./collectionList.scss";
+import { collectionListState, initialCollectionListState } from "./Provider";
+
 
 const RelatedCollectionList = ({ id }) => {
   const [state, setState] = useRecoilState(collectionListState);

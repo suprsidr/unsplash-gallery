@@ -1,15 +1,15 @@
+import { Link as A } from "raviger";
 import React, { useEffect } from "react";
-import { A } from "hookrouter";
-import { useInView } from "react-intersection-observer";
-import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Image from "react-bootstrap/Image";
+import Row from "react-bootstrap/Row";
 import Spinner from "react-bootstrap/Spinner";
+import { useInView } from "react-intersection-observer";
 import { useRecoilState } from "recoil";
-import { collectionListState, initialCollectionListState } from "./Provider";
 import { getUserCollections } from "../services/lambda-service";
-
 import "./collectionList.scss";
+import { collectionListState, initialCollectionListState } from "./Provider";
+
 
 const CollectionList = ({ userName }) => {
   const [state, setState] = useRecoilState(collectionListState);

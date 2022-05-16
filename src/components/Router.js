@@ -1,15 +1,15 @@
+import { useRoutes } from "raviger";
 import React from "react";
-import { useRoutes } from "hookrouter";
-
-import HomePage from "./HomePage";
 import About from "./About";
-import NotFound from "./NotFound";
-import CollectionList from "./CollectionList";
 import CollectionImageData from "./CollectionImageData";
-import PhotoSearchData from "./PhotoSearchData";
+import CollectionList from "./CollectionList";
+import HomePage from "./HomePage";
+import NotFound from "./NotFound";
 import PhotoGrid from "./PhotoGrid";
-import UserCollectionList from "./UserCollectionList";
+import PhotoSearchData from "./PhotoSearchData";
 import RelatedCollectionList from "./RelatedCollectionList";
+import UserCollectionList from "./UserCollectionList";
+
 
 const Router = () => {
   /* eslint-disable */

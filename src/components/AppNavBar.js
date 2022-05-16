@@ -1,16 +1,14 @@
+import { navigate } from "raviger";
 import React, { useEffect } from "react";
-import createPersistedState from "use-persisted-state";
-import Navbar from "react-bootstrap/Navbar";
-import Nav from "react-bootstrap/Nav";
 import Form from "react-bootstrap/Form";
-import { navigate } from "hookrouter";
-
+import Nav from "react-bootstrap/Nav";
+import Navbar from "react-bootstrap/Navbar";
+import { useRecoilState } from 'recoil';
 import "./appNavBar.scss";
-
-const useThemeState = createPersistedState("theme");
+import { themeState } from "./Provider";
 
 const AppNavBar = () => {
-  const [theme, setTheme] = useThemeState("light");
+  const [theme, setTheme] = useRecoilState(themeState);
 
   useEffect(() => {
     switch (theme) {
@@ -57,7 +55,11 @@ const AppNavBar = () => {
           id="theme-switch"
           label="Light/Dark"
           checked={theme === "dark"}
-          onChange={(e) => setTheme(e.target.checked ? "dark" : "light")}
+          onChange={(e) => {
+            const newTheme = e.target.checked ? 'dark' : 'light';
+            localStorage.setItem('savedTheme', newTheme);
+            setTheme(newTheme);
+          }}
         />
       </Form>
     </Navbar>
